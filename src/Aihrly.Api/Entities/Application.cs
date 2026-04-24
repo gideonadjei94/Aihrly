@@ -14,7 +14,6 @@ public class Application
     public ApplicationStage Stage { get; set; } = ApplicationStage.Applied;
     public DateTime AppliedAt { get; set; }
 
-    // Navigation properties — EF uses these to do JOINs automatically
     public Job Job { get; set; } = null!;
     public ICollection<ApplicationNote> Notes { get; set; } = [];
     public ICollection<ApplicationScore> Scores { get; set; } = [];

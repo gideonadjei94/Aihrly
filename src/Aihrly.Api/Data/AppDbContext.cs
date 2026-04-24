@@ -4,8 +4,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Aihrly.Api.Data;
 
-public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options)
+public class AppDbContext : DbContext
 {
+public  AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+    {   
+    }
     public DbSet<TeamMember> TeamMembers => Set<TeamMember>();
     public DbSet<Job> Jobs => Set<Job>();
     public DbSet<Application> Applications => Set<Application>();
@@ -171,21 +174,21 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         modelBuilder.Entity<TeamMember>().HasData(
             new TeamMember
             {
-                Id = Guid.Parse("11111111-1111-1111-1111-111111111111"),
+                Id = Guid.Parse("100"),
                 Name = "Alice Mensah",
                 Email = "alice@aihrly.com",
                 Role = TeamMemberRole.Recruiter
             },
             new TeamMember
             {
-                Id = Guid.Parse("22222222-2222-2222-2222-222222222222"),
+                Id = Guid.Parse("101"),
                 Name = "Kwame Boateng",
                 Email = "kwame@aihrly.com",
                 Role = TeamMemberRole.HiringManager
             },
             new TeamMember
             {
-                Id = Guid.Parse("33333333-3333-3333-3333-333333333333"),
+                Id = Guid.Parse("102"),
                 Name = "Sara Osei",
                 Email = "sara@aihrly.com",
                 Role = TeamMemberRole.Recruiter

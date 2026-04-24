@@ -10,7 +10,7 @@ public class ApplicationNote
     public NoteType Type { get; set; }
     public string Description { get; set; } = string.Empty;
 
-    // Who wrote this note — resolved from X-Team-Member-Id header, not client input
+    // GUID for note writer — resolved from X-Team-Member-Id header
     public Guid CreatedBy { get; set; }
     public DateTime CreatedAt { get; set; }
 
