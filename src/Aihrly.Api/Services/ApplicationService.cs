@@ -19,7 +19,7 @@ public class ApplicationService(AppDbContext db) : IApplicationService
         if (!jobExists)
             throw new NotFoundException(nameof(Job), jobId);
 
-        // Duplicate check — same email cannot apply to the same job twice
+        // Checking If a candidate with the same email has already applied to this job (case-insensitive)
         var alreadyApplied = await db.Applications
             .AnyAsync(a => a.JobId == jobId && a.CandidateEmail == request.CandidateEmail.ToLower());
 
@@ -141,7 +141,7 @@ public class ApplicationService(AppDbContext db) : IApplicationService
             .FirstOrDefaultAsync(a => a.Id == id)
             ?? throw new NotFoundException(nameof(Application), id);
 
-        // EnumParser handles "screening", "Screening", "SCREENING" etc.
+        // EnumParser handles "screening", "Screening", "SCREENING" ...
         EnumParser.TryParse<ApplicationStage>(request.Stage, out var targetStage);
 
         if (!StageTransitionRules.IsValid(application.Stage, targetStage))

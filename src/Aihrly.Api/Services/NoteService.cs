@@ -18,17 +18,16 @@ public class NoteService(AppDbContext db) : INoteService
         if (!applicationExists)
             throw new NotFoundException(nameof(Application), applicationId);
 
-        // NoteType was validated by FluentValidation so parsing here is safe
         EnumParser.TryParse<NoteType>(request.Type, out var noteType);
 
         var note = new ApplicationNote
         {
-            Id            = Guid.NewGuid(),
+            Id = Guid.NewGuid(),
             ApplicationId = applicationId,
-            Type          = noteType,
-            Description   = request.Description,
-            CreatedBy     = teamMemberId,
-            CreatedAt     = DateTime.UtcNow
+            Type = noteType,
+            Description = request.Description,
+            CreatedBy = teamMemberId,
+            CreatedAt = DateTime.UtcNow
         };
 
         db.ApplicationNotes.Add(note);

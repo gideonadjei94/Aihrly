@@ -23,8 +23,8 @@ public class ScoreService(AppDbContext db) : IScoreService
         if (existing is not null)
         {
             // Overwrite — second submission wins, track who changed it and when
-            existing.Score    = request.Score;
-            existing.Comment  = request.Comment;
+            existing.Score = request.Score;
+            existing.Comment = request.Comment;
             existing.ScoredBy = teamMemberId;
             existing.ScoredAt = DateTime.UtcNow;
         }
@@ -32,13 +32,13 @@ public class ScoreService(AppDbContext db) : IScoreService
         {
             var score = new ApplicationScore
             {
-                Id            = Guid.NewGuid(),
+                Id = Guid.NewGuid(),
                 ApplicationId = applicationId,
-                Dimension     = dimension,
-                Score         = request.Score,
-                Comment       = request.Comment,
-                ScoredBy      = teamMemberId,
-                ScoredAt      = DateTime.UtcNow
+                Dimension = dimension,
+                Score = request.Score,
+                Comment = request.Comment,
+                ScoredBy = teamMemberId,
+                ScoredAt = DateTime.UtcNow
             };
 
             db.ApplicationScores.Add(score);

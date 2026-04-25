@@ -1,4 +1,6 @@
 using Aihrly.Api.Data;
+using Aihrly.Api.Services;
+using Aihrly.Api.Services.Interfaces;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,5 +28,12 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
-    // We'll add AddApplicationServices() here as we build each feature
+    public static IServiceCollection AddApplicationServices(this IServiceCollection services)
+    {
+        services.AddScoped<IJobService, JobService>();
+        services.AddScoped<IApplicationService, ApplicationService>();
+        services.AddScoped<INoteService, NoteService>();
+        services.AddScoped<IScoreService, ScoreService>();
+        return services;
+    }
 }

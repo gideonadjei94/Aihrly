@@ -16,6 +16,11 @@ public  AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     public DbSet<ApplicationScore> ApplicationScores => Set<ApplicationScore>();
     public DbSet<StageHistory> StageHistories => Set<StageHistory>();
 
+    // Seeding Ids
+    public static readonly Guid AliceId = new("a1b2c3d4-e5f6-7890-abcd-ef1234567890");
+    public static readonly Guid KwameId = new("b2c3d4e5-f6a7-8901-bcde-f12345678901");
+    public static readonly Guid SaraId  = new("c3d4e5f6-a7b8-9012-cdef-123456789012");
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         ConfigureTeamMember(modelBuilder);
@@ -36,7 +41,7 @@ public  AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
             entity.Property(e => e.Name).IsRequired().HasMaxLength(200);
             entity.Property(e => e.Email).IsRequired().HasMaxLength(200);
 
-            // Store enums as strings so the DB is readable without a lookup table
+            // Storing enums as strings so the DB is readable without a lookup table
             entity.Property(e => e.Role)
                   .HasConversion<string>()
                   .IsRequired();
@@ -59,7 +64,6 @@ public  AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
                   .HasConversion<string>()
                   .IsRequired();
 
-            // We filter jobs by status often, so index it
             entity.HasIndex(e => e.Status);
         });
     }
@@ -80,7 +84,6 @@ public  AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
             // A candidate cannot apply to the same job twice with the same email
             entity.HasIndex(e => new { e.JobId, e.CandidateEmail }).IsUnique();
 
-            // We filter by stage often
             entity.HasIndex(e => new { e.JobId, e.Stage });
 
             entity.HasOne(e => e.Job)
@@ -170,25 +173,24 @@ public  AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
 
     private static void SeedTeamMembers(ModelBuilder modelBuilder)
     {
-        // Fixed GUIDs so the README can document them and tests can reference them
         modelBuilder.Entity<TeamMember>().HasData(
             new TeamMember
             {
-                Id = Guid.Parse("100"),
+                Id = AliceId,
                 Name = "Alice Mensah",
                 Email = "alice@aihrly.com",
                 Role = TeamMemberRole.Recruiter
             },
             new TeamMember
             {
-                Id = Guid.Parse("101"),
+                Id = KwameId,
                 Name = "Kwame Boateng",
                 Email = "kwame@aihrly.com",
                 Role = TeamMemberRole.HiringManager
             },
             new TeamMember
             {
-                Id = Guid.Parse("102"),
+                Id = SaraId,
                 Name = "Sara Osei",
                 Email = "sara@aihrly.com",
                 Role = TeamMemberRole.Recruiter

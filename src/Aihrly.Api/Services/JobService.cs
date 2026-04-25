@@ -17,12 +17,12 @@ public class JobService(AppDbContext db) : IJobService
     {
         var job = new Job
         {
-            Id          = Guid.NewGuid(),
-            Title       = request.Title,
+            Id = Guid.NewGuid(),
+            Title = request.Title,
             Description = request.Description,
-            Location    = request.Location,
-            Status      = JobStatus.Open,
-            CreatedAt   = DateTime.UtcNow
+            Location = request.Location,
+            Status = JobStatus.Open,
+            CreatedAt = DateTime.UtcNow
         };
 
         db.Jobs.Add(job);
