@@ -25,11 +25,9 @@ public class NotificationDispatchTests(ApiFactory factory) : IClassFixture<ApiFa
             teamMemberId: AppDbContext.AliceId);
 
         // The endpoint returns 204 immediately — not after the notification is sent
-        Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
 
         // The worker runs asynchronously, so we give it a moment to write to the DB
-        // In production this would be an event-driven assertion, but a short wait
-        // is the standard pattern for testing background workers in integration tests
         await Task.Delay(TimeSpan.FromSeconds(2));
 
         // Assert — notification row was written to the DB

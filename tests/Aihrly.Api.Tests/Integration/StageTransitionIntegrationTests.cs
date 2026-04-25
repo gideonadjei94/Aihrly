@@ -20,7 +20,7 @@ public class StageTransitionIntegrationTests(ApiFactory factory) : IClassFixture
             new { stage = "Screening" },
             teamMemberId: AppDbContext.AliceId);
 
-        Assert.Equal(HttpStatusCode.NoContent, response.StatusCode);
+        Assert.Equal(HttpStatusCode.OK, response.StatusCode);
     }
 
     [Fact]

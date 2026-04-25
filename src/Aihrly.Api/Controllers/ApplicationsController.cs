@@ -67,7 +67,7 @@ public class ApplicationsController(
 
         var teamMemberId = (Guid)HttpContext.Items[RequireTeamMemberAttribute.ContextKey]!;
         await applicationService.MoveStageAsync(id, request, teamMemberId);
-        return NoContent();
+        return Ok(new { message = "Application stage updated successfully." });
     }
 
     // ── Notes Endpints ─────────────────────────────────────────────────────────────────
