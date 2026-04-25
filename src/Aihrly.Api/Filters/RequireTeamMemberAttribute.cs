@@ -19,7 +19,7 @@ public class RequireTeamMemberAttribute : Attribute, IAsyncActionFilter
         {
             context.Result = new ObjectResult(new ProblemDetails
             {
-                Title  = "Missing or invalid header",
+                Title = "Missing or invalid header",
                 Detail = $"'{HeaderName}' header must be a valid GUID.",
                 Status = StatusCodes.Status400BadRequest
             })
@@ -36,7 +36,7 @@ public class RequireTeamMemberAttribute : Attribute, IAsyncActionFilter
         {
             context.Result = new ObjectResult(new ProblemDetails
             {
-                Title  = "Team member not found",
+                Title = "Team member not found",
                 Detail = $"No team member exists with id '{teamMemberId}'.",
                 Status = StatusCodes.Status400BadRequest
             })

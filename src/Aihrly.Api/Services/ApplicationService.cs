@@ -28,13 +28,13 @@ public class ApplicationService(AppDbContext db) : IApplicationService
 
         var application = new Application
         {
-            Id             = Guid.NewGuid(),
-            JobId          = jobId,
+            Id = Guid.NewGuid(),
+            JobId = jobId,
             CandidateName  = request.CandidateName,
             CandidateEmail = request.CandidateEmail.ToLower(),
-            CoverLetter    = request.CoverLetter,
-            Stage          = ApplicationStage.Applied,
-            AppliedAt      = DateTime.UtcNow
+            CoverLetter = request.CoverLetter,
+            Stage = ApplicationStage.Applied,
+            AppliedAt = DateTime.UtcNow
         };
 
         db.Applications.Add(application);
@@ -158,13 +158,13 @@ public class ApplicationService(AppDbContext db) : IApplicationService
 
         var history = new StageHistory
         {
-            Id            = Guid.NewGuid(),
+            Id = Guid.NewGuid(),
             ApplicationId = application.Id,
-            FromStage     = application.Stage,
-            ToStage       = targetStage,
-            ChangedBy     = teamMemberId,
-            ChangedAt     = DateTime.UtcNow,
-            Reason        = request.Reason
+            FromStage = application.Stage,
+            ToStage = targetStage,
+            ChangedBy = teamMemberId,
+            ChangedAt = DateTime.UtcNow,
+            Reason = request.Reason
         };
 
         application.Stage = targetStage;
