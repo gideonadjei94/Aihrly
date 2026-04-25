@@ -3,6 +3,7 @@ using Aihrly.Api.Services;
 using Aihrly.Api.Services.Interfaces;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using Aihrly.Api.Infrastructure;
 
 namespace Aihrly.Api.Extensions;
 
@@ -34,6 +35,9 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IApplicationService, ApplicationService>();
         services.AddScoped<INoteService, NoteService>();
         services.AddScoped<IScoreService, ScoreService>();
+
+        services.AddSingleton<INotificationQueue, NotificationQueue>();
+        services.AddHostedService<NotificationWorker>();
         return services;
     }
 }

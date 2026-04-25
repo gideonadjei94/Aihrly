@@ -8,10 +8,11 @@ using Aihrly.Api.Enums;
 using Aihrly.Api.Exceptions;
 using Aihrly.Api.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Aihrly.Api.Infrastructure;
 
 namespace Aihrly.Api.Services;
 
-public class ApplicationService(AppDbContext db) : IApplicationService
+public class ApplicationService(AppDbContext db, INotificationQueue notificationQueue) : IApplicationService
 {
     public async Task<CreatedResponse> CreateAsync(Guid jobId, CreateApplicationRequest request)
     {
@@ -141,7 +142,6 @@ public class ApplicationService(AppDbContext db) : IApplicationService
             .FirstOrDefaultAsync(a => a.Id == id)
             ?? throw new NotFoundException(nameof(Application), id);
 
-        // EnumParser handles "screening", "Screening", "SCREENING" ...
         EnumParser.TryParse<ApplicationStage>(request.Stage, out var targetStage);
 
         if (!StageTransitionRules.IsValid(application.Stage, targetStage))
@@ -158,18 +158,21 @@ public class ApplicationService(AppDbContext db) : IApplicationService
 
         var history = new StageHistory
         {
-            Id = Guid.NewGuid(),
+            Id            = Guid.NewGuid(),
             ApplicationId = application.Id,
-            FromStage = application.Stage,
-            ToStage = targetStage,
-            ChangedBy = teamMemberId,
-            ChangedAt = DateTime.UtcNow,
-            Reason = request.Reason
+            FromStage     = application.Stage,
+            ToStage       = targetStage,
+            ChangedBy     = teamMemberId,
+            ChangedAt     = DateTime.UtcNow,
+            Reason        = request.Reason
         };
 
         application.Stage = targetStage;
-
         db.StageHistories.Add(history);
         await db.SaveChangesAsync();
+
+        // Fire-and-forget — enqueue after the DB write succeeds so we don't notify on a failed move
+        if (StageTransitionRules.IsTerminal(targetStage))
+            notificationQueue.Enqueue(new NotificationMessage(application.Id, targetStage.ToString().ToLower()));
     }
 }

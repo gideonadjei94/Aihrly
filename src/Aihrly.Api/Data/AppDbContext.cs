@@ -15,6 +15,7 @@ public  AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
     public DbSet<ApplicationNote> ApplicationNotes => Set<ApplicationNote>();
     public DbSet<ApplicationScore> ApplicationScores => Set<ApplicationScore>();
     public DbSet<StageHistory> StageHistories => Set<StageHistory>();
+    public DbSet<Notification> Notifications => Set<Notification>();
 
     // Seeding Ids
     public static readonly Guid AliceId = new("a1b2c3d4-e5f6-7890-abcd-ef1234567890");
@@ -170,6 +171,23 @@ public  AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
                   .OnDelete(DeleteBehavior.Restrict);
         });
     }
+
+     private static void ConfigureNotification(ModelBuilder modelBuilder)
+    {
+        modelBuilder.Entity<Notification>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Type).IsRequired().HasMaxLength(50);
+            entity.Property(e => e.SentAt).IsRequired();
+            entity.HasIndex(e => e.ApplicationId);
+
+            entity.HasOne(e => e.Application)
+                  .WithMany()
+                  .HasForeignKey(e => e.ApplicationId)
+                  .OnDelete(DeleteBehavior.Cascade);
+        });
+    }
+
 
     private static void SeedTeamMembers(ModelBuilder modelBuilder)
     {

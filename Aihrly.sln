@@ -7,6 +7,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4CA1991B-2B9
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aihrly.Api", "src\Aihrly.Api\Aihrly.Api.csproj", "{401624CB-EBA1-4EA3-96F5-1DC7896833AE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{4C26DF79-A0FE-4095-8F3D-67406BD4AAC3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Aihrly.Api.Tests", "tests\Aihrly.Api.Tests\Aihrly.Api.Tests.csproj", "{06E71BE2-E1F7-4CEC-A9BF-8C31340AD0E1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,8 +24,13 @@ Global
 		{401624CB-EBA1-4EA3-96F5-1DC7896833AE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{401624CB-EBA1-4EA3-96F5-1DC7896833AE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{401624CB-EBA1-4EA3-96F5-1DC7896833AE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{06E71BE2-E1F7-4CEC-A9BF-8C31340AD0E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{06E71BE2-E1F7-4CEC-A9BF-8C31340AD0E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{06E71BE2-E1F7-4CEC-A9BF-8C31340AD0E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{06E71BE2-E1F7-4CEC-A9BF-8C31340AD0E1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{401624CB-EBA1-4EA3-96F5-1DC7896833AE} = {4CA1991B-2B90-4198-9D8B-B9D93745D86C}
+		{06E71BE2-E1F7-4CEC-A9BF-8C31340AD0E1} = {4C26DF79-A0FE-4095-8F3D-67406BD4AAC3}
 	EndGlobalSection
 EndGlobal
