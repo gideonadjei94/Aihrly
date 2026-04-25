@@ -27,20 +27,20 @@ services:
     depends_on:
       postgres:
         condition: service_healthy
-  # api:
-  #   build:
-  #     context: .
-  #     dockerfile: src/Aihrly.Api/Dockerfile
-  #   container_name: aihrly_api
-  #   ports:
-  #     - "8080:8080"
-  #   environment:
-  #     ASPNETCORE_ENVIRONMENT: Development
-  #     ConnectionStrings__DefaultConnection: "Host=postgres;Port=5432;Database=aihrly;\
-  #       Username=aihrly_user;Password=aihrly_pass"
-  #   depends_on:
-  #     postgres:
-  #       condition: service_healthy
+  api:
+    build:
+      context: .
+      dockerfile: src/Aihrly.Api/Dockerfile
+    container_name: aihrly_api
+    ports:
+      - "8080:8080"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ConnectionStrings__DefaultConnection: "Host=postgres;Port=5432;Database=aihrly;\
+        Username=aihrly_user;Password=aihrly_pass"
+    depends_on:
+      postgres:
+        condition: service_healthy
 
 volumes:
   pgdata:
